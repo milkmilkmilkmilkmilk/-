@@ -1,0 +1,281 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Arial', sans-serif;
+}
+
+.othello-game {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.othello-game h1 {
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+.game-container {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.othello-board {
+  display: flex;
+  justify-content: center;
+}
+
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 2px;
+  background: #8B4513;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.board-row {
+  display: contents;
+}
+
+.board-cell {
+  width: 60px;
+  height: 60px;
+  background: #228B22;
+  border: 2px solid #8B4513;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.board-cell:hover {
+  background: #32CD32;
+  transform: scale(1.05);
+}
+
+.board-cell.valid-move {
+  background: #90EE90;
+}
+
+.stone {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.stone.black {
+  background: radial-gradient(circle at 30% 30%, #666, #000);
+  border: 2px solid #333;
+}
+
+.stone.white {
+  background: radial-gradient(circle at 30% 30%, #fff, #ccc);
+  border: 2px solid #999;
+}
+
+.valid-move-indicator {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 0, 0.7);
+  border-radius: 50%;
+  border: 2px solid #FFD700;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.game-info {
+  min-width: 250px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.score-board {
+  margin-bottom: 30px;
+}
+
+.score-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  padding: 10px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.score-item .stone {
+  width: 30px;
+  height: 30px;
+}
+
+.score-item span {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+
+.current-player {
+  margin-bottom: 30px;
+}
+
+.current-player h3 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.3em;
+}
+
+.current-stone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.current-stone .stone {
+  width: 40px;
+  height: 40px;
+}
+
+.current-stone span {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+
+.game-over {
+  padding: 20px;
+  background: #e8f5e8;
+  border-radius: 8px;
+  border: 2px solid #4CAF50;
+}
+
+.game-over h3 {
+  color: #2E7D32;
+  margin-bottom: 10px;
+}
+
+.game-over p {
+  color: #1B5E20;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.reset-button {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.reset-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.reset-button:active {
+  transform: translateY(0);
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+  .game-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .board-cell {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .stone {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .othello-game {
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  .othello-game h1 {
+    font-size: 2em;
+  }
+}
