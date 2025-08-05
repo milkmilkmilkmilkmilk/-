@@ -12,10 +12,12 @@ export const useOthello = () => {
   const [board, setBoard] = useState<CellState[][]>(() => {
     const initialBoard: CellState[][] = Array(8).fill(null).map(() => Array(8).fill(null));
     // 初期配置
-    initialBoard[3][3] = 'white';
-    initialBoard[3][4] = 'black';
-    initialBoard[4][3] = 'black';
-    initialBoard[4][4] = 'white';
+    if (initialBoard[3] && initialBoard[4]) {
+      initialBoard[3][3] = 'white';
+      initialBoard[3][4] = 'black';
+      initialBoard[4][3] = 'black';
+      initialBoard[4][4] = 'white';
+    }
     return initialBoard;
   });
 
@@ -30,7 +32,7 @@ export const useOthello = () => {
     let hasOpponent = false;
     
     // 隣接するマスが相手の石かチェック
-    if (r < 0 || r >= 8 || c < 0 || c >= 8 || board[r][c] !== opponent) {
+    if (r < 0 || r >= 8 || c < 0 || c >= 8 || !board[r] || board[r][c] !== opponent) {
       return false;
     }
     
@@ -39,7 +41,7 @@ export const useOthello = () => {
     c += dc;
     
     // その方向に自分の石があるかチェック
-    while (r >= 0 && r < 8 && c >= 0 && c < 8) {
+    while (r >= 0 && r < 8 && c >= 0 && c < 8 && board[r] && board[r][c] !== null) {
       if (board[r][c] === null) return false;
       if (board[r][c] === player) return hasOpponent;
       r += dr;
@@ -51,7 +53,7 @@ export const useOthello = () => {
 
   // 石を置けるかチェック
   const canPlaceStone = useCallback((row: number, col: number, player: Player): boolean => {
-    if (board[row][col] !== null) return false;
+    if (!board[row] || board[row][col] !== null) return false;
     
     const directions = [
       [-1, -1], [-1, 0], [-1, 1],
@@ -70,7 +72,7 @@ export const useOthello = () => {
     
     for (let row = 0; row < 8; row++) {
       for (let col = 0; col < 8; col++) {
-        if (board[row][col] === null && canPlaceStone(row, col, player)) {
+        if (board[row] && board[row][col] === null && canPlaceStone(row, col, player)) {
           validMoves.push({ row, col });
         }
       }
@@ -81,7 +83,7 @@ export const useOthello = () => {
 
   // 石を置く
   const placeStone = useCallback((row: number, col: number) => {
-    if (gameOver || board[row][col] !== null || !canPlaceStone(row, col, currentPlayer)) {
+    if (gameOver || !board[row] || board[row][col] !== null || !canPlaceStone(row, col, currentPlayer)) {
       return false;
     }
 
@@ -93,7 +95,9 @@ export const useOthello = () => {
     ];
 
     // 石を置く
-    newBoard[row][col] = currentPlayer;
+    if (newBoard[row]) {
+      newBoard[row][col] = currentPlayer;
+    }
 
     // 各方向の石をひっくり返す
     directions.forEach(([dr, dc]) => {
@@ -102,7 +106,7 @@ export const useOthello = () => {
         let c = col + dc;
         const opponent = currentPlayer === 'black' ? 'white' : 'black';
         
-        while (r >= 0 && r < 8 && c >= 0 && c < 8 && newBoard[r][c] === opponent) {
+        while (r >= 0 && r < 8 && c >= 0 && c < 8 && newBoard[r] && newBoard[r][c] === opponent) {
           newBoard[r][c] = currentPlayer;
           r += dr;
           c += dc;
@@ -133,10 +137,12 @@ export const useOthello = () => {
   // ゲームをリセット
   const resetGame = useCallback(() => {
     const initialBoard: CellState[][] = Array(8).fill(null).map(() => Array(8).fill(null));
-    initialBoard[3][3] = 'white';
-    initialBoard[3][4] = 'black';
-    initialBoard[4][3] = 'black';
-    initialBoard[4][4] = 'white';
+    if (initialBoard[3] && initialBoard[4]) {
+      initialBoard[3][3] = 'white';
+      initialBoard[3][4] = 'black';
+      initialBoard[4][3] = 'black';
+      initialBoard[4][4] = 'white';
+    }
     
     setBoard(initialBoard);
     setCurrentPlayer('black');
@@ -150,8 +156,8 @@ export const useOthello = () => {
     
     for (let row = 0; row < 8; row++) {
       for (let col = 0; col < 8; col++) {
-        if (board[row][col] === 'black') blackCount++;
-        else if (board[row][col] === 'white') whiteCount++;
+        if (board[row] && board[row][col] === 'black') blackCount++;
+        else if (board[row] && board[row][col] === 'white') whiteCount++;
       }
     }
     

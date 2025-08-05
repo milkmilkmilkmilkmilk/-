@@ -9,14 +9,12 @@ interface Position {
 
 interface OthelloBoardProps {
   board: CellState[][];
-  currentPlayer: 'black' | 'white';
   validMoves: Position[];
   onCellClick: (row: number, col: number) => void;
 }
 
 export const OthelloBoard: React.FC<OthelloBoardProps> = ({
   board,
-  currentPlayer,
   validMoves,
   onCellClick,
 }) => {

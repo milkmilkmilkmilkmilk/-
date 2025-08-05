@@ -1,4 +1,3 @@
-import React from 'react';
 import { useOthello } from './hooks/useOthello';
 import { OthelloBoard } from './components/OthelloBoard';
 import { GameInfo } from './components/GameInfo';
@@ -26,7 +25,6 @@ function App() {
         <div className="game-container">
           <OthelloBoard
             board={board}
-            currentPlayer={currentPlayer}
             validMoves={validMoves}
             onCellClick={handleCellClick}
           />
